@@ -1,0 +1,13 @@
+/* Paleta y variables globales - Sitio público */
+:root {
+    --color-negro: #1A1A1A;
+    --color-vinotinto: #5C0E2B;
+    --color-dorado: #FFD700;
+    --color-dorado-suave: #F0E68C;
+    --color-fondo-claro: #F5F5F5;
+    --color-azul-oscuro: #142a41;
+    /* Tipografía elegante (Cormorant Garamond, Cinzel, EB Garamond) */
+    --font-display: 'Cinzel', serif;
+    --font-quote: 'Cormorant Garamond', serif;
+    --font-elegant: 'EB Garamond', serif;
+}

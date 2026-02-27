@@ -1,0 +1,109 @@
+/* Login / Registro - fondo y tarjeta */
+.auth-page-funeraria {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1rem;
+    overflow-x: hidden;
+}
+.auth-page-funeraria__bg {
+    position: fixed;
+    inset: 0;
+    background-image: url('/images/FUNE.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    z-index: 0;
+}
+@media (max-width: 768px) {
+    .auth-page-funeraria__bg { background-attachment: scroll; }
+}
+.auth-page-funeraria__overlay {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(92, 14, 43, 0.88) 0%,
+        rgba(26, 26, 26, 0.92) 50%,
+        rgba(20, 42, 65, 0.9) 100%
+    );
+    z-index: 1;
+}
+.auth-page-funeraria__content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.auth-card-funeraria {
+    background-color: rgba(245, 240, 232, 0.98) !important;
+    backdrop-filter: blur(8px);
+    border: 2px solid var(--color-dorado);
+    box-shadow:
+        0 25px 50px -12px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 215, 0, 0.15);
+}
+.auth-card-funeraria label { color: var(--color-negro) !important; }
+.auth-card-funeraria input[type="text"],
+.auth-card-funeraria input[type="email"],
+.auth-card-funeraria input[type="password"] {
+    border-color: #d4c5a9;
+    background-color: #fff;
+    border-radius: 0.5rem;
+}
+.auth-card-funeraria input:focus {
+    border-color: var(--color-dorado) !important;
+    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.25) !important;
+    outline: none;
+}
+.auth-card-funeraria .auth-btn-primary,
+.auth-card-funeraria form button[type="submit"] {
+    background: linear-gradient(135deg, var(--color-dorado) 0%, var(--color-dorado-suave) 100%) !important;
+    color: var(--color-negro) !important;
+    border: none !important;
+    font-weight: 600;
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+.auth-card-funeraria .auth-btn-primary:hover,
+.auth-card-funeraria form button[type="submit"]:hover {
+    background: linear-gradient(135deg, var(--color-dorado-suave) 0%, var(--color-dorado) 100%) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+}
+.auth-card-funeraria a { color: var(--color-dorado) !important; }
+.auth-card-funeraria a:hover { color: var(--color-dorado-suave) !important; text-decoration: underline; }
+.auth-card-funeraria .text-gray-600 { color: var(--color-negro) !important; opacity: 0.9; }
+.auth-card-funeraria .text-red-600 { color: #b91c1c !important; }
+.auth-page-funeraria__content .auth-card-funeraria {
+    animation: authCardFadeIn 0.5s ease-out;
+}
+@keyframes authCardFadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.auth-logo-funeraria { color: var(--color-dorado); font-size: 2rem; margin-bottom: 0.5rem; }
+.auth-logo-funeraria .brand-name { color: var(--color-vinotinto); font-weight: 700; font-size: 1.5rem; }
+/* Logo encima del login/registro: esquinas redondas, mismo tamaño */
+.auth-card-logo-img,
+.auth-card-funeraria img[alt="Funeraria San José"] {
+    max-height: 4.5rem;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
+    border-radius: 1rem;
+}
+.auth-card-funeraria .checkbox:focus { --tw-ring-color: var(--color-dorado); }
+.auth-card-funeraria [type="checkbox"]:checked {
+    background-color: var(--color-vinotinto);
+    border-color: var(--color-vinotinto);
+}
+.auth-subtitle { color: var(--color-dorado-suave); font-size: 0.875rem; margin-top: 0.25rem; }

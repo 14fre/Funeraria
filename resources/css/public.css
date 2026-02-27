@@ -1,0 +1,11 @@
+/**
+ * Sitio público - Punto de entrada.
+ * Estilos organizados en carpeta public/ por responsabilidad.
+ */
+@import './public/_variables.css';
+@import './public/_base.css';
+@import './public/_components.css';
+@import './public/_layout.css';
+@import './public/_servicios-hero.css';
+@import './public/_home.css';
+@import './public/_auth.css';

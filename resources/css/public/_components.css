@@ -1,0 +1,74 @@
+/* Scroll reveal */
+.section-reveal {
+    animation: sectionReveal 0.6s ease-out both;
+}
+@keyframes sectionReveal {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.section-reveal-delay-1 { animation-delay: 0.1s; }
+.section-reveal-delay-2 { animation-delay: 0.2s; }
+.section-reveal-delay-3 { animation-delay: 0.3s; }
+.section-reveal-delay-4 { animation-delay: 0.4s; }
+
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+.reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+.reveal-on-scroll.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-on-scroll.reveal-delay-2 { transition-delay: 0.15s; }
+.reveal-on-scroll.reveal-delay-3 { transition-delay: 0.2s; }
+.reveal-on-scroll.reveal-delay-4 { transition-delay: 0.25s; }
+.reveal-on-scroll.reveal-delay-5 { transition-delay: 0.3s; }
+.reveal-on-scroll.reveal-delay-6 { transition-delay: 0.35s; }
+
+/* WhatsApp flotante */
+.whatsapp-float {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 40;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #25d366;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.45);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.whatsapp-float:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+}
+.whatsapp-float i { font-size: 1.75rem; }
+
+/* Hover con animación (mouse) - uso en cards e imágenes */
+.hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.hover-lift:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+.hover-lift-img {
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.hover-lift-img:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+.hover-scale-img img,
+.hover-scale-img {
+    transition: transform 0.35s ease;
+}
+.hover-scale-img:hover img {
+    transform: scale(1.05);
+}

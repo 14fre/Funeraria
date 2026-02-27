@@ -1,0 +1,66 @@
+/* Utilidades de marca (clases globales) */
+.bg-vinotinto { background-color: var(--color-vinotinto); }
+.bg-dorado { background-color: var(--color-dorado); }
+.text-dorado { color: var(--color-dorado); }
+.text-vinotinto { color: var(--color-vinotinto); }
+.border-dorado { border-color: var(--color-dorado); }
+.text-glow-dorado { text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+
+/* Gradientes */
+.gradient-vinotinto {
+    background: linear-gradient(135deg, var(--color-vinotinto) 0%, #7a1a3d 100%);
+}
+.gradient-dorado {
+    background: linear-gradient(135deg, var(--color-dorado) 0%, var(--color-dorado-suave) 100%);
+}
+.gradient-hero {
+    background: linear-gradient(135deg, var(--color-vinotinto) 0%, var(--color-negro) 50%, var(--color-azul-oscuro) 100%);
+}
+
+/* Botones */
+.btn-dorado {
+    background: linear-gradient(135deg, var(--color-dorado) 0%, var(--color-dorado-suave) 100%);
+    color: var(--color-negro);
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+.btn-dorado:hover {
+    background: linear-gradient(135deg, var(--color-dorado-suave) 0%, var(--color-dorado) 100%);
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+}
+
+.btn-vinotinto {
+    background-color: var(--color-vinotinto);
+    color: white;
+    transition: all 0.3s ease;
+}
+.btn-vinotinto:hover {
+    background-color: #7a1a3d;
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(92, 14, 43, 0.4);
+}
+
+/* Cards y formularios */
+.card-hover {
+    transition: all 0.3s ease;
+}
+.card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.input-focus-funeraria:focus {
+    outline: none;
+    border-color: var(--color-vinotinto);
+    box-shadow: 0 0 0 2px rgba(92, 14, 43, 0.2);
+}
+
+/* Animaciones genéricas */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
