@@ -16,9 +16,12 @@ use App\Constants\Roles;
 Route::middleware(['auth', 'role:' . Roles::ADMIN])->prefix('admin')->name('admin.')->group(function () {
     
     // Dashboard
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', App\Http\Controllers\Admin\DashboardController::class)->name('dashboard');
+
+    // Mi Perfil (foto, 2FA por correo, contraseña con código)
+    Route::get('/perfil', function () {
+        return view('admin.perfil');
+    })->name('perfil');
 
     // Usuarios
     Route::prefix('usuarios')->name('usuarios.')->group(function () {
@@ -205,7 +208,13 @@ Route::middleware(['auth', 'role:' . Roles::ADMIN])->prefix('admin')->name('admi
         Route::get('/', function () {
             return view('admin.reportes.index');
         })->name('index');
-        // Aquí irán más rutas de reportes
+    });
+
+    // Contabilidad (entradas/salidas, reportes mensual/anual)
+    Route::prefix('contabilidad')->name('contabilidad.')->group(function () {
+        Route::get('/', [App\Http\Controllers\Admin\ContabilidadController::class, 'index'])->name('index');
+        Route::get('/reporte-mensual', [App\Http\Controllers\Admin\ContabilidadController::class, 'reporteMensual'])->name('reporte-mensual');
+        Route::get('/reporte-anual', [App\Http\Controllers\Admin\ContabilidadController::class, 'reporteAnual'])->name('reporte-anual');
     });
 
     // Configuración

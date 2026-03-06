@@ -65,6 +65,14 @@ Route::get('/contacto', function () {
 |
 */
 
+// 2FA por correo y cambio de contraseña con código
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
+    Route::post('/user/two-factor-email/enable', [App\Http\Controllers\TwoFactorEmailController::class, 'enable'])->name('two-factor-email.enable');
+    Route::post('/user/two-factor-email/disable', [App\Http\Controllers\TwoFactorEmailController::class, 'disable'])->name('two-factor-email.disable');
+    Route::post('/user/password-change/send-code', [App\Http\Controllers\PasswordChangeController::class, 'sendCode'])->name('password-change.send-code');
+    Route::post('/user/password-change/with-code', [App\Http\Controllers\PasswordChangeController::class, 'changeWithCode'])->name('password-change.with-code');
+});
+
 // Ruta genérica de dashboard (redirige según rol)
 Route::middleware([
     'auth:sanctum',

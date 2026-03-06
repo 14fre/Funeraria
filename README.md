@@ -1,3 +1,50 @@
+# Funeraria San José
+
+Proyecto Laravel (Jetstream) con portal público, panel admin y portal cliente.
+
+---
+
+## Después de clonar (instalación)
+
+Quien clone el repositorio debe hacer lo siguiente:
+
+### 1. Dependencias y configuración
+```bash
+composer install
+cp .env.example .env
+php artisan key:generate
+npm install && npm run build
+```
+
+### 2. Base de datos
+```bash
+php artisan migrate
+php artisan db:seed
+```
+
+### 3. Enlace de storage (fotos de perfil, etc.)
+```bash
+php artisan storage:link
+```
+Esto crea el enlace `public/storage` → `storage/app/public`. Sin esto, las fotos de perfil y archivos subidos no se verán (se guardan en `storage/app/public/profile-photos` pero la web no puede servirlas). En Windows, si falla por permisos, abre CMD o PowerShell **como Administrador** y ejecuta desde la raíz del proyecto:
+```cmd
+rmdir public\storage
+mklink /D public\storage storage\app\public
+```
+
+### 4. Vídeos (opcional)
+Los vídeos **no están en el repositorio** (superan el límite de GitHub). La carpeta `public/videos/` sí existe en el proyecto.
+
+- Si quieres usar vídeos en el sitio, **coloca los archivos** (por ejemplo `Video.mp4`, `VIDEO2.mp4`) dentro de `public/videos/`.
+- Si la carpeta no existiera, créala: `public/videos/` y luego pon ahí los `.mp4`.
+
+No hace falta ejecutar nada más para los vídeos; solo que los archivos estén en esa ruta.
+
+### 5. Verificación en dos pasos por correo (2FA)
+La autenticación de dos factores por correo envía un código al email del usuario. Para que se envíen correos reales, configura en `.env` el mailer (por ejemplo SMTP). Si usas `MAIL_MAILER=log`, el correo se escribe en `storage/logs/laravel.log` y no se envía por email.
+
+---
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">

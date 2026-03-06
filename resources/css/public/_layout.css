@@ -122,6 +122,14 @@
     padding: 1rem;
     text-align: center;
     border: 1px solid rgba(255, 215, 0, 0.2);
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: border-color 0.2s, background 0.2s;
+}
+.footer-sede-card:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 215, 0, 0.5);
 }
 .footer-sede-card__icon {
     width: 2rem;
@@ -141,15 +149,13 @@
     display: block;
     margin-bottom: 0.25rem;
 }
-.footer-sede-card__direccion,
+.footer-sede-card__direccion { font-size: 0.8125rem; color: rgba(255, 255, 255, 0.8); display: block; }
+.footer-sede-card__tel-wrap { display: block; margin-top: 0.25rem; }
 .footer-sede-card__tel {
     font-size: 0.8125rem;
-    color: rgba(255, 255, 255, 0.8);
-    display: block;
-}
-.footer-sede-card__tel {
     color: var(--color-dorado);
     text-decoration: none;
+    display: inline-block;
     margin-top: 0.25rem;
 }
 .footer-sede-card__tel:hover {
@@ -413,7 +419,12 @@
 @media (min-width: 1024px) {
     .sedes-list--cards { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
 }
-.sede-item { display: flex; gap: 1rem; align-items: flex-start; }
+.sede-item { display: flex; flex-direction: column; gap: 0.5rem; }
+.sede-item__maps-wrap {
+    display: flex; gap: 1rem; align-items: flex-start;
+    text-decoration: none; color: inherit; cursor: pointer;
+}
+.sede-item__maps-wrap:hover .sede-item__direccion { color: var(--color-vinotinto); }
 .sede-item__icon {
     width: 2.5rem; height: 2.5rem; border-radius: 50%;
     background: rgba(255, 215, 0, 0.2); color: var(--color-dorado);

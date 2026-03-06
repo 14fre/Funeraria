@@ -31,6 +31,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role_id',
+        'two_factor_via_email',
     ];
 
 
@@ -152,6 +153,21 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'two_factor_via_email' => 'boolean',
         ];
+    }
+
+    /**
+     * Determina si la verificación en dos pasos está activa (TOTP o por correo).
+     */
+    public function hasEnabledTwoFactorAuthentication()
+    {
+        if (! empty($this->two_factor_via_email)) {
+            return ! is_null($this->two_factor_confirmed_at);
+        }
+        if (\Laravel\Fortify\Fortify::confirmsTwoFactorAuthentication()) {
+            return ! is_null($this->two_factor_secret) && ! is_null($this->two_factor_confirmed_at);
+        }
+        return ! is_null($this->two_factor_secret);
     }
 }

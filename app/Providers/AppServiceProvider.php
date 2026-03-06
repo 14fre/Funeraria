@@ -20,7 +20,9 @@ use App\Repositories\ReservaRepository;
 use App\Repositories\SalaVelacionRepository;
 use App\Repositories\ServicioFunerarioRepository;
 use App\Repositories\VehiculoRepository;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
@@ -89,5 +91,16 @@ class AppServiceProvider extends ServiceProvider
             'profile.update-profile-information-form',
             \App\Http\Livewire\Profile\UpdateProfileInformationForm::class
         );
+
+        // Correo de restablecer contraseña con diseño Funeraria San José
+        ResetPassword::toMailUsing(function ($notifiable, $token) {
+            $url = url(route('password.reset', [
+                'token' => $token,
+                'email' => $notifiable->getEmailForPasswordReset(),
+            ], false));
+            return (new MailMessage)
+                ->subject('Restablecer contraseña - Funeraria San José')
+                ->view('emails.password-reset', ['user' => $notifiable, 'url' => $url]);
+        });
     }
 }

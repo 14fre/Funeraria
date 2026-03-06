@@ -39,6 +39,10 @@
             </div>
         </div>
 
+        <footer class="auth-footer text-center py-4 text-sm text-white/80">
+            <p>Funeraria San José &copy; {{ date('Y') }}</p>
+        </footer>
+
         @livewireScripts
         <script>
         (function() {

@@ -192,14 +192,18 @@
             <!-- Sedes en fila (como en funerariasanjose.co) -->
             <div class="footer-sedes-row">
                 @foreach(config('funeraria.sedes', []) as $sede)
-                    <div class="footer-sede-card">
+                    @php
+                        $dirMaps = $sede['direccion'] . (!empty($sede['detalle']) ? ' ' . $sede['detalle'] : '') . ', Colombia';
+                        $mapsUrl = 'https://www.google.com/maps/search/?api=1&query=' . urlencode($dirMaps);
+                    @endphp
+                    <a href="{{ $mapsUrl }}" target="_blank" rel="noopener noreferrer" class="footer-sede-card" title="Ver ubicación en Google Maps">
                         <div class="footer-sede-card__icon">
                             <i class="fas fa-map-marker-alt"></i>
                         </div>
                         <span class="footer-sede-card__nombre">{{ $sede['nombre'] }}</span>
                         <span class="footer-sede-card__direccion">{{ $sede['direccion'] }}{{ !empty($sede['detalle']) ? ' ' . $sede['detalle'] : '' }}</span>
-                        <a href="tel:{{ preg_replace('/\D/', '', $sede['telefono']) }}" class="footer-sede-card__tel">Cel. {{ $sede['telefono'] }}</a>
-                    </div>
+                        <span class="footer-sede-card__tel-wrap"><a href="tel:{{ preg_replace('/\D/', '', $sede['telefono']) }}" class="footer-sede-card__tel" onclick="event.stopPropagation()">Cel. {{ $sede['telefono'] }}</a></span>
+                    </a>
                 @endforeach
             </div>
 

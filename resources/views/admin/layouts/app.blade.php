@@ -26,6 +26,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        /* Scrollbar del menú admin: discreta y acorde al tema vinotinto/dorado */
+        .admin-sidebar-nav::-webkit-scrollbar { width: 6px; }
+        .admin-sidebar-nav::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 3px; }
+        .admin-sidebar-nav::-webkit-scrollbar-thumb { background: rgba(255,215,0,0.35); border-radius: 3px; }
+        .admin-sidebar-nav::-webkit-scrollbar-thumb:hover { background: rgba(255,215,0,0.5); }
+        .admin-sidebar-nav { scrollbar-width: thin; scrollbar-color: rgba(255,215,0,0.4) rgba(0,0,0,0.2); }
+    </style>
 </head>
 <body class="font-sans antialiased bg-gray-50">
     <x-banner />
@@ -47,7 +55,7 @@
                     </button>
                 </div>
                 
-                <nav class="space-y-2">
+                <nav class="space-y-2 overflow-y-auto max-h-[calc(100vh-8rem)] pr-1 admin-sidebar-nav">
                     <a href="{{ route('admin.dashboard') }}" 
                        class="flex items-center px-4 py-3 rounded-lg transition-colors {{ request()->routeIs('admin.dashboard') ? 'bg-[#FFD700] text-gray-900 font-semibold' : 'hover:bg-[#7a1a3d]' }}">
                         <i class="fas fa-home w-5 mr-3"></i>
@@ -126,16 +134,16 @@
                         Obituarios
                     </a>
                     
-                    <a href="{{ route('admin.reportes.index') }}" 
-                       class="flex items-center px-4 py-3 rounded-lg transition-colors {{ request()->routeIs('admin.reportes.*') ? 'bg-[#FFD700] text-gray-900 font-semibold' : 'hover:bg-[#7a1a3d]' }}">
-                        <i class="fas fa-chart-bar w-5 mr-3"></i>
-                        Reportes
+                    <a href="{{ route('admin.contabilidad.index') }}" 
+                       class="flex items-center px-4 py-3 rounded-lg transition-colors {{ request()->routeIs('admin.contabilidad.*') ? 'bg-[#FFD700] text-gray-900 font-semibold' : 'hover:bg-[#7a1a3d]' }}">
+                        <i class="fas fa-chart-line w-5 mr-3"></i>
+                        Finanzas
                     </a>
                     
-                    <a href="{{ route('admin.configuracion.index') }}" 
-                       class="flex items-center px-4 py-3 rounded-lg transition-colors {{ request()->routeIs('admin.configuracion.*') ? 'bg-[#FFD700] text-gray-900 font-semibold' : 'hover:bg-[#7a1a3d]' }}">
-                        <i class="fas fa-cog w-5 mr-3"></i>
-                        Configuración
+                    <a href="{{ route('admin.perfil') }}" 
+                       class="flex items-center px-4 py-3 rounded-lg transition-colors {{ request()->routeIs('admin.perfil') ? 'bg-[#FFD700] text-gray-900 font-semibold' : 'hover:bg-[#7a1a3d]' }}">
+                        <i class="fas fa-user w-5 mr-3"></i>
+                        Mi Perfil
                     </a>
                 </nav>
             </div>
@@ -161,10 +169,18 @@
                             <p class="text-xs text-gray-500">Administrador</p>
                         </div>
                         
+                        @php
+                            $u = Auth::user();
+                            $avatarSrc = $u->profile_photo_path
+                                ? asset('storage/' . $u->profile_photo_path) . '?v=' . ($u->updated_at?->timestamp ?? time())
+                                : $u->profile_photo_url;
+                            $avatarFallback = 'https://ui-avatars.com/api/?name=' . urlencode($u->name) . '&color=5C0E2B&background=EBF4FF';
+                        @endphp
                         <div class="relative">
-                            <img src="{{ Auth::user()->profile_photo_url }}" 
-                                 alt="{{ Auth::user()->name }}" 
-                                 class="w-10 h-10 rounded-full border-2 border-[#FFD700] object-cover">
+                            <img src="{{ $avatarSrc }}"
+                                 alt="{{ $u->name }}"
+                                 class="w-10 h-10 rounded-full border-2 border-[#FFD700] object-cover bg-gray-200"
+                                 onerror="this.onerror=null; this.src='{{ $avatarFallback }}';">
                         </div>
                         
                         <form method="POST" action="{{ route('logout') }}">
@@ -180,14 +196,21 @@
             </header>
 
             <!-- Page Content -->
-            <main class="p-6">
+            <main class="p-6 flex flex-col min-h-[calc(100vh-4rem)]">
                 @if (isset($header))
                     <div class="mb-6">
                         {{ $header }}
                     </div>
                 @endif
 
-                {{ $slot }}
+                <div class="flex-1">
+                    {{ $slot }}
+                </div>
+
+                <footer class="mt-8 pt-6 border-t border-gray-200 text-center text-sm text-gray-500">
+                    <p>Funeraria San José &copy; {{ date('Y') }}. Panel administrativo.</p>
+                    <p class="mt-1">Sistema de gestión exequial.</p>
+                </footer>
             </main>
         </div>
     </div>

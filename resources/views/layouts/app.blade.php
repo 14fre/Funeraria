@@ -38,8 +38,13 @@
             @endif
 
             <!-- Page Content -->
-            <main>
-                {{ $slot }}
+            <main class="flex flex-col min-h-[calc(100vh-8rem)]">
+                <div class="flex-1">
+                    {{ $slot }}
+                </div>
+                <footer class="mt-auto py-4 border-t border-gray-200 bg-white text-center text-sm text-gray-500">
+                    <p>Funeraria San José &copy; {{ date('Y') }}. Sistema de gestión exequial.</p>
+                </footer>
             </main>
         </div>
 

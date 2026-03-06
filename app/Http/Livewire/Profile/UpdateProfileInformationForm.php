@@ -29,9 +29,13 @@ class UpdateProfileInformationForm extends JetstreamUpdateProfileInformationForm
             if (!$user->relationLoaded('role')) {
                 $user->load('role');
             }
-            return $user->hasRole(Roles::CLIENTE)
-                ? redirect()->route('cliente.perfil')
-                : redirect()->route('profile.show');
+            if ($user->hasRole(Roles::CLIENTE)) {
+                return redirect()->route('cliente.perfil');
+            }
+            if ($user->hasRole(Roles::ADMIN)) {
+                return redirect()->route('admin.perfil');
+            }
+            return redirect()->route('profile.show');
         }
 
         $this->dispatch('saved');

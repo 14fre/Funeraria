@@ -12,6 +12,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Evitar caché en páginas autenticadas (atrás/adelante no reabre panel en caché)
+        $middleware->web(append: [
+            \App\Http\Middleware\PreventAuthenticatedPageCaching::class,
+        ]);
         // Registrar middlewares personalizados
         $middleware->alias([
             'role.redirect' => \App\Http\Middleware\RoleRedirect::class,

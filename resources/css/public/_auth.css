@@ -107,3 +107,11 @@
     border-color: var(--color-vinotinto);
 }
 .auth-subtitle { color: var(--color-dorado-suave); font-size: 0.875rem; margin-top: 0.25rem; }
+
+/* Pie de página en login/registro */
+.auth-footer {
+    position: relative;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.35);
+    margin-top: auto;
+}

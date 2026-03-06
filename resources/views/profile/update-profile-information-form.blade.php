@@ -15,8 +15,15 @@
                                     reader.readAsDataURL($refs.photo.files[0]);
                             " />
                 <x-label for="photo" value="Foto" />
+                @php
+                    $photoUrl = $this->user->profile_photo_path
+                        ? asset('storage/' . $this->user->profile_photo_path) . '?v=' . ($this->user->updated_at?->timestamp ?? time())
+                        : $this->user->profile_photo_url;
+                    $photoFallback = 'https://ui-avatars.com/api/?name=' . urlencode($this->user->name) . '&color=5C0E2B&background=EBF4FF';
+                @endphp
                 <div class="mt-2" x-show="! photoPreview">
-                    <img src="{{ $this->user->profile_photo_url }}" alt="{{ $this->user->name }}" class="rounded-full size-20 object-cover">
+                    <img src="{{ $photoUrl }}" alt="{{ $this->user->name }}" class="rounded-full size-20 object-cover bg-gray-200"
+                         onerror="this.onerror=null; this.src='{{ $photoFallback }}';" loading="lazy">
                 </div>
                 <div class="mt-2" x-show="photoPreview" style="display: none;">
                     <span class="block rounded-full size-20 bg-cover bg-no-repeat bg-center"

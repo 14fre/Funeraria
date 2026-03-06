@@ -155,7 +155,7 @@
                         @php
                             $u = Auth::user();
                             $avatarSrc = $u->profile_photo_path
-                                ? asset('storage/' . $u->profile_photo_path)
+                                ? asset('storage/' . $u->profile_photo_path) . '?v=' . ($u->updated_at?->timestamp ?? time())
                                 : $u->profile_photo_url;
                             $avatarFallback = 'https://ui-avatars.com/api/?name=' . urlencode($u->name) . '&color=7F9CF5&background=EBF4FF';
                         @endphp
@@ -179,14 +179,21 @@
             </header>
 
             <!-- Page Content -->
-            <main class="cliente-portal-main relative z-10 p-6">
+            <main class="cliente-portal-main relative z-10 p-6 flex flex-col min-h-[calc(100vh-4rem)]">
                 @if (isset($header))
                     <div class="mb-6">
                         {{ $header }}
                     </div>
                 @endif
 
-                {{ $slot }}
+                <div class="flex-1">
+                    {{ $slot }}
+                </div>
+
+                <footer class="mt-8 pt-6 border-t border-gray-300 text-center text-sm text-gray-500">
+                    <p>Funeraria San José &copy; {{ date('Y') }}. Mi portal.</p>
+                    <p class="mt-1">Sistema de gestión exequial.</p>
+                </footer>
             </main>
         </div>
     </div>
