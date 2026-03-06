@@ -134,10 +134,22 @@
                         Obituarios
                     </a>
                     
+                    <a href="{{ route('admin.contactos.index') }}" 
+                       class="flex items-center px-4 py-3 rounded-lg transition-colors {{ request()->routeIs('admin.contactos.*') ? 'bg-[#FFD700] text-gray-900 font-semibold' : 'hover:bg-[#7a1a3d]' }}">
+                        <i class="fas fa-envelope w-5 mr-3"></i>
+                        Mensajes de contacto
+                    </a>
+                    
                     <a href="{{ route('admin.contabilidad.index') }}" 
                        class="flex items-center px-4 py-3 rounded-lg transition-colors {{ request()->routeIs('admin.contabilidad.*') ? 'bg-[#FFD700] text-gray-900 font-semibold' : 'hover:bg-[#7a1a3d]' }}">
                         <i class="fas fa-chart-line w-5 mr-3"></i>
                         Finanzas
+                    </a>
+                    
+                    <a href="{{ route('admin.configuracion.index') }}" 
+                       class="flex items-center px-4 py-3 rounded-lg transition-colors {{ request()->routeIs('admin.configuracion.*') ? 'bg-[#FFD700] text-gray-900 font-semibold' : 'hover:bg-[#7a1a3d]' }}">
+                        <i class="fas fa-cog w-5 mr-3"></i>
+                        Configuración
                     </a>
                     
                     <a href="{{ route('admin.perfil') }}" 

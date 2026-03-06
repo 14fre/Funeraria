@@ -51,9 +51,9 @@
             </p>
             <div class="contacto-destacado-box">
                 <h2 class="text-xl font-bold mb-2" style="color: var(--color-vinotinto);">Funerales San José del Huila SAS</h2>
-                <p class="text-gray-700">{{ config('funeraria.direccion_principal') }}<br>{{ config('funeraria.ciudad') }}</p>
-                <p class="text-gray-700 mt-2">Móvil: {{ implode(' - ', config('funeraria.telefonos', [])) }}</p>
-                <p class="text-gray-700">{{ config('funeraria.email') }}</p>
+                <p class="text-gray-700">{{ empresa_config('empresa_direccion', config('funeraria.direccion_principal')) }}<br>{{ empresa_config('empresa_ciudad', config('funeraria.ciudad')) }}</p>
+                <p class="text-gray-700 mt-2">Móvil: {{ empresa_config('empresa_telefonos', implode(' - ', config('funeraria.telefonos', []))) }}</p>
+                <p class="text-gray-700">{{ empresa_config('empresa_email', config('funeraria.email')) }}</p>
             </div>
         </div>
     </section>
@@ -73,8 +73,8 @@
                             </div>
                             <div>
                                 <h3 class="font-semibold text-gray-900 mb-1">Teléfono</h3>
-                                @php $phones = config('funeraria.telefonos', []); @endphp
-                                <p class="text-gray-600">{{ count($phones) ? implode(' - ', $phones) : '(608) 871-2345' }}</p>
+                                @php $phonesStr = empresa_config('empresa_telefonos', implode(' - ', config('funeraria.telefonos', []))); @endphp
+                                <p class="text-gray-600">{{ $phonesStr ?: '(608) 871-2345' }}</p>
                                 <p class="text-sm text-gray-500">Lunes a Viernes: 8:00 AM - 6:00 PM</p>
                             </div>
                         </div>
@@ -85,7 +85,7 @@
                             </div>
                             <div>
                                 <h3 class="font-semibold text-gray-900 mb-1">Email</h3>
-                                <p class="text-gray-600">{{ config('funeraria.email', 'info@funerariasanjose.co') }}</p>
+                                <p class="text-gray-600">{{ empresa_config('empresa_email', config('funeraria.email', 'info@funerariasanjose.co')) }}</p>
                             </div>
                         </div>
 
@@ -95,7 +95,7 @@
                             </div>
                             <div>
                                 <h3 class="font-semibold text-gray-900 mb-1">Dirección principal</h3>
-                                <p class="text-gray-600">{{ config('funeraria.direccion_principal') }}<br>{{ config('funeraria.ciudad') }}</p>
+                                <p class="text-gray-600">{{ empresa_config('empresa_direccion', config('funeraria.direccion_principal')) }}<br>{{ empresa_config('empresa_ciudad', config('funeraria.ciudad')) }}</p>
                             </div>
                         </div>
 
@@ -156,29 +156,46 @@
                 <!-- Formulario de Contacto (contenedor ajustado al contenido) -->
                 <div class="contacto-form-card bg-white rounded-xl shadow-lg p-6 hover-lift self-start">
                     <h2 class="section-title text-gray-900 mb-5">Envíanos un mensaje</h2>
-                    <form action="#" method="POST" class="space-y-3">
+                    @if(session('success'))
+                        <div class="mb-4 p-4 rounded-lg bg-green-50 border border-green-200 text-green-800">
+                            <i class="fas fa-check-circle mr-2"></i>{{ session('success') }}
+                        </div>
+                    @endif
+                    @if($errors->any())
+                        <div class="mb-4 p-4 rounded-lg bg-red-50 border border-red-200 text-red-800 text-sm">
+                            <ul class="list-disc list-inside">
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <form action="{{ route('contacto.store') }}" method="POST" class="space-y-3">
                         @csrf
                         <div>
                             <label for="nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
                             <input type="text" 
                                    id="nombre"
                                    name="nombre"
+                                   value="{{ old('nombre') }}"
                                    required
-                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus-funeraria">
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus-funeraria @error('nombre') border-red-500 @enderror">
                         </div>
                         <div>
                             <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
                             <input type="email" 
                                    id="email"
                                    name="email"
+                                   value="{{ old('email') }}"
                                    required
-                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus-funeraria">
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus-funeraria @error('email') border-red-500 @enderror">
                         </div>
                         <div>
                             <label for="telefono" class="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
                             <input type="tel" 
                                    id="telefono"
                                    name="telefono"
+                                   value="{{ old('telefono') }}"
                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus-funeraria">
                         </div>
                         <div>
@@ -186,8 +203,9 @@
                             <input type="text" 
                                    id="asunto"
                                    name="asunto"
+                                   value="{{ old('asunto') }}"
                                    required
-                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus-funeraria">
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus-funeraria @error('asunto') border-red-500 @enderror">
                         </div>
                         <div>
                             <label for="mensaje" class="block text-sm font-medium text-gray-700 mb-1">Mensaje</label>
@@ -195,7 +213,7 @@
                                       name="mensaje"
                                       rows="3"
                                       required
-                                      class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus-funeraria"></textarea>
+                                      class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus-funeraria @error('mensaje') border-red-500 @enderror">{{ old('mensaje') }}</textarea>
                         </div>
                         <button type="submit" 
                                 class="w-full btn-vinotinto text-white py-2.5 rounded-xl font-semibold mt-1 transition-all hover:opacity-90">

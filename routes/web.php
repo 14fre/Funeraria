@@ -51,9 +51,8 @@ Route::get('/quienes-somos', function () {
     return view('quienes-somos');
 })->name('quienes-somos');
 
-Route::get('/contacto', function () {
-    return view('contacto');
-})->name('contacto');
+Route::get('/contacto', [App\Http\Controllers\ContactoController::class, 'index'])->name('contacto');
+Route::post('/contacto', [App\Http\Controllers\ContactoController::class, 'store'])->name('contacto.store');
 
 /*
 |--------------------------------------------------------------------------

@@ -32,11 +32,11 @@
     <!-- Barra superior: redes y contacto (estilo funerariasanjose.co) -->
     <div class="nav-top">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-9 text-sm">
-            <span class="text-white/90 hidden sm:inline">{{ config('funeraria.ciudad', 'Neiva - Huila') }}</span>
+            <span class="text-white/90 hidden sm:inline">{{ empresa_config('empresa_ciudad', config('funeraria.ciudad', 'Neiva - Huila')) }}</span>
             <div class="flex items-center gap-4">
                 <a href="https://www.instagram.com/funerariasanjosedelhuila" target="_blank" rel="noopener noreferrer" class="text-white/90 hover:text-dorado transition-colors" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                 <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" class="text-white/90 hover:text-dorado transition-colors" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                @php $wa = config('services.whatsapp.number', '573186298729'); @endphp
+                @php $wa = empresa_config('empresa_whatsapp', config('services.whatsapp.number', '573186298729')); @endphp
                 <a href="https://wa.me/{{ preg_replace('/\D/', '', $wa) }}" target="_blank" rel="noopener noreferrer" class="text-white/90 hover:text-dorado transition-colors" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
             </div>
         </div>
@@ -151,8 +151,8 @@
             <!-- Datos de contacto destacados -->
             <div class="text-center mb-10">
                 <h3 class="text-xl font-bold mb-2" style="color: var(--color-dorado);">Funerales San José del Huila SAS</h3>
-                <p class="text-white/90">{{ config('funeraria.direccion_principal') }}<br>{{ config('funeraria.ciudad') }}</p>
-                <p class="text-white/90 mt-1">Móvil: {{ implode(' - ', config('funeraria.telefonos', [])) }}<br>{{ config('funeraria.email') }}</p>
+                <p class="text-white/90">{{ empresa_config('empresa_direccion', config('funeraria.direccion_principal')) }}<br>{{ empresa_config('empresa_ciudad', config('funeraria.ciudad')) }}</p>
+                <p class="text-white/90 mt-1">Móvil: {{ empresa_config('empresa_telefonos', implode(' - ', config('funeraria.telefonos', []))) }}<br>{{ empresa_config('empresa_email', config('funeraria.email')) }}</p>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
@@ -215,7 +215,7 @@
     </footer>
 
     @php
-        $whatsappNumber = config('services.whatsapp.number', '573186298729');
+        $whatsappNumber = empresa_config('empresa_whatsapp', config('services.whatsapp.number', '573186298729'));
         $whatsappUrl = 'https://wa.me/' . preg_replace('/\D/', '', $whatsappNumber);
     @endphp
     <a href="{{ $whatsappUrl }}" target="_blank" rel="noopener noreferrer" class="whatsapp-float" title="Contactar por WhatsApp" aria-label="Abrir WhatsApp">

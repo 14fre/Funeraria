@@ -80,11 +80,11 @@
                     </p>
                     <p class="address mb-2">
                         <i class="fas fa-map-marker-alt mr-2"></i>
-                        {{ config('funeraria.direccion_principal') }}<br>
-                        {{ config('funeraria.ciudad') }}
+                        {{ empresa_config('empresa_direccion', config('funeraria.direccion_principal')) }}<br>
+                        {{ empresa_config('empresa_ciudad', config('funeraria.ciudad')) }}
                     </p>
                     <p class="text-muted text-sm mb-4">
-                        Móvil: {{ implode(' - ', config('funeraria.telefonos', [])) }}
+                        Móvil: {{ empresa_config('empresa_telefonos', implode(' - ', config('funeraria.telefonos', []))) }}
                     </p>
                     <div class="flex gap-4">
                         <a href="https://www.instagram.com/funerariasanjosedelhuila" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-dorado transition-colors" aria-label="Instagram">

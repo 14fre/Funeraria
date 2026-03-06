@@ -52,3 +52,18 @@ if (!function_exists('imagenes_para_vista')) {
         return $resultado;
     }
 }
+
+if (!function_exists('empresa_config')) {
+    /**
+     * Obtiene un valor de configuración de empresa desde BD (tabla configuracion),
+     * con un valor por defecto en caso de que no exista.
+     *
+     * @param string $clave
+     * @param mixed $default
+     * @return mixed
+     */
+    function empresa_config(string $clave, mixed $default = null): mixed
+    {
+        return \App\Models\Configuracion::obtener($clave, $default);
+    }
+}

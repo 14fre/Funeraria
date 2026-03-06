@@ -65,7 +65,8 @@ Route::middleware(['auth', 'role:' . Roles::ADMIN])->prefix('admin')->name('admi
                 return redirect()->route('admin.solicitudes-afiliacion.index')->with('error', $e->getMessage());
             }
             $solicitud->update(['estado' => 'aprobada', 'responded_at' => now(), 'responded_by' => auth()->id()]);
-            return redirect()->route('admin.solicitudes-afiliacion.index')->with('success', 'Solicitud aprobada y usuario afiliado correctamente.');
+            $solicitud->user->notify(new \App\Notifications\AfiliacionAprobadaNotification($solicitud));
+            return redirect()->route('admin.solicitudes-afiliacion.index')->with('success', 'Solicitud aprobada y usuario afiliado correctamente. Se envió un correo al usuario.');
         })->name('aprobar');
         Route::post('/{solicitud}/rechazar', function (\App\Models\SolicitudAfiliacion $solicitud) {
             if ($solicitud->estado !== 'pendiente') {
@@ -135,12 +136,14 @@ Route::middleware(['auth', 'role:' . Roles::ADMIN])->prefix('admin')->name('admi
         })->name('edit');
     });
 
-    // Pagos
+    // Pagos (listado + alta manual)
     Route::prefix('pagos')->name('pagos.')->group(function () {
         Route::get('/', function () {
             return view('admin.pagos.index');
         })->name('index');
-        // Aquí irán más rutas de pagos
+        Route::get('/create', function () {
+            return view('admin.pagos.create');
+        })->name('create');
     });
 
     // Inventario
@@ -190,6 +193,13 @@ Route::middleware(['auth', 'role:' . Roles::ADMIN])->prefix('admin')->name('admi
         // Aquí irán más rutas de reservas
     });
 
+    // Mensajes del formulario de contacto (sitio web)
+    Route::prefix('contactos')->name('contactos.')->group(function () {
+        Route::get('/', [App\Http\Controllers\Admin\ContactoController::class, 'index'])->name('index');
+        Route::get('/{contacto}', [App\Http\Controllers\Admin\ContactoController::class, 'show'])->name('show');
+        Route::get('/{contacto}/marcar-leido', [App\Http\Controllers\Admin\ContactoController::class, 'marcarLeido'])->name('marcar-leido');
+    });
+
     // Obituarios
     Route::prefix('obituarios')->name('obituarios.')->group(function () {
         Route::get('/', function () {
@@ -217,12 +227,10 @@ Route::middleware(['auth', 'role:' . Roles::ADMIN])->prefix('admin')->name('admi
         Route::get('/reporte-anual', [App\Http\Controllers\Admin\ContabilidadController::class, 'reporteAnual'])->name('reporte-anual');
     });
 
-    // Configuración
+    // Configuración general (datos de la funeraria)
     Route::prefix('configuracion')->name('configuracion.')->group(function () {
-        Route::get('/', function () {
-            return view('admin.configuracion.index');
-        })->name('index');
-        // Aquí irán más rutas de configuración
+        Route::get('/', [App\Http\Controllers\Admin\ConfiguracionController::class, 'index'])->name('index');
+        Route::post('/', [App\Http\Controllers\Admin\ConfiguracionController::class, 'update'])->name('update');
     });
 });
 
